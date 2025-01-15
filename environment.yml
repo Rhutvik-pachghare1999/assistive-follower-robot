@@ -1,0 +1,21 @@
+name: follower-robot
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch=2.1
+  - torchvision=0.16
+  - pytorch-cuda=11.8
+  - numpy=1.24
+  - opencv=4.8
+  - pyyaml=6.0
+  - tqdm=4.66
+  - pillow=10.0
+  - pip
+  - pip:
+    - depthai==2.24
+    - torch==2.1
+    - torchvision==0.16

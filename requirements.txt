@@ -1,0 +1,22 @@
+# Core
+torch>=2.0
+torchvision>=0.15
+numpy>=1.22
+pandas>=1.5.0
+scikit-learn>=1.3.0
+opencv-python>=4.5
+depthai>=2.21
+
+# ROS 2 (install via apt/colcon, not pip)
+# rclpy
+# sensor_msgs
+# geometry_msgs
+# nav_msgs
+# std_msgs
+# cv_bridge
+# ament_index_python
+
+# Evaluation & Utils
+Pillow>=9.0
+pyyaml>=6.0
+tqdm>=4.66
