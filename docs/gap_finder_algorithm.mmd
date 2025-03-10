@@ -1,0 +1,10 @@
+graph TB
+    SCAN[LiDAR Scan\n360° ranges] --> PREPROC[Preprocess\n- NaN/Inf -> 0\n- Clamp to 6m\n- Moving avg WINDOW_SIZE=10]
+    PREPROC --> MASK[Mask Bubble\nBUBBLE_RADIUS=10\naround closest obstacle]
+    MASK --> FIND_GAP[Find Max Gap\nRANGE_THRESHOLD=1.0m]
+    FIND_GAP --> BEST_POINT[Best Point in Gap\nMin |gap_angle - user_heading|]
+    BEST_POINT --> STEER[Steering Angle]
+    STEER --> VEL[Velocity Limits\nANGLE_LIMIT=80°\nVELOCITY_LIMITS]
+    VEL --> CMD[Twist: linear.x, angular.z]
+    
+    USER[User Heading\nfrom prediction_topic] --> BEST_POINT

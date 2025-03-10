@@ -1,0 +1,8 @@
+graph LR
+    IMG[Input Image\n640x480x3 RGB] --> RESIZE[Resize 224x224]
+    RESIZE --> NORM[ImageNet Normalize\nmean=[0.485,0.456,0.406]\nstd=[0.229,0.224,0.225]]
+    NORM --> RESNET[ResNet18 Backbone\nFrozen Features\n11.2M params]
+    RESNET --> FC[FC Layer: 512 -> 4]
+    FC --> OUT[Raw Output:\nx_offset_norm, z_dist_norm,\nsin(theta), cos(theta)]
+    OUT --> POST[Post-process:\nangle = atan2(sin, cos)\nx_offset = x_norm * width\nz_dist = z_norm * 2000mm]
+    POST --> PUB[Publish to\n/rpi_11/prediction_topic]

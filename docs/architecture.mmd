@@ -1,0 +1,29 @@
+graph TB
+    subgraph Sensors
+        CAM[OAK-D RGB Camera\n640x480 @ 30fps]
+        LIDAR[RPLiDAR A1\n360° @ 10Hz]
+    end
+    
+    subgraph Perception
+        PRED[predict_publisher_node\nResNet18 Shoe Detection]
+        PRED -->|x_offset, z_dist, angle| PRED_OUT[/rpi_11/prediction_topic/]
+    end
+    
+    subgraph Navigation
+        GAP[gap_finder\nFollow Gap Algorithm]
+        GAP -->|Twist| CMD[/cmd_vel/]
+    end
+    
+    subgraph Visualization
+        RVIZ[RViz2]
+        GUI[PyQt5 GUI]
+    end
+    
+    CAM --> PRED
+    LIDAR --> GAP
+    PRED_OUT --> GAP
+    GAP --> CMD
+    CMD --> TB4[TurtleBot 4 Base]
+    PRED_OUT --> RVIZ
+    GAP --> RVIZ
+    CMD --> GUI
