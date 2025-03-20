@@ -1,0 +1,32 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt
+          pip install flake8 black isort pytest
+      - name: Lint
+        run: flake8 my_nodes/ training/ gui/ --max-line-length=120 --ignore=E501,W503
+      - name: Format check
+        run: black --check my_nodes/ training/ gui/
+      - name: Import test (non-ROS modules only)
+        run: |
+          python -c "
+          import training.train_shoe_detector
+          print('Non-ROS imports OK')
+          "
+      - name: Check ROS 2 modules syntax
+        run: |
+          python -m py_compile my_nodes/scripts/gap_finder.py
+          python -m py_compile my_nodes/scripts/predict_publisher_node.py
+          python -m py_compile gui/ros2_gui.py
+          echo "ROS 2 module syntax OK"
