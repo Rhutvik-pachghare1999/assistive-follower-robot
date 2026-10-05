@@ -49,7 +49,20 @@ def main():
         ]
     )
 
-    dataset = ShoeDataset("data/annotations.csv", "data/images", transform)
+    # Check if data directory exists
+    data_dir = Path("data")
+    annotations_path = data_dir / "annotations.csv"
+    images_dir = data_dir / "images"
+    
+    if not annotations_path.exists():
+        raise FileNotFoundError(
+            f"Annotations file not found: {annotations_path}\n"
+            "Please prepare your dataset following docs/dataset_preparation.md"
+        )
+    if not images_dir.exists():
+        raise FileNotFoundError(f"Images directory not found: {images_dir}")
+
+    dataset = ShoeDataset(str(annotations_path), str(images_dir), transform)
     train_idx, val_idx = train_test_split(
         range(len(dataset)), test_size=0.2, random_state=42
     )
@@ -97,6 +110,10 @@ def main():
             best_val = val_loss
             torch.save(model.state_dict(), "shoe_model.pth")
             print(f"  Saved best model (val_loss={val_loss:.6f})")
+            print(f"  Copy to ROS package with: cp shoe_model.pth ../my_nodes/models/")
+
+    print(f"\nTraining complete. Best val loss: {best_val:.6f}")
+    print("Deploy model: cp shoe_model.pth ../my_nodes/models/shoe_model.pth")
 
 
 if __name__ == "__main__":

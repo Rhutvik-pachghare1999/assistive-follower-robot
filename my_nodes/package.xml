@@ -2,22 +2,23 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>my_nodes</name>
-  <version>0.0.0</version>
-  <description>Homework1</description>
-  <maintainer email="mnasr3@todo.todo">mnasr3</maintainer>
-  <license>TODO: License declaration</license>
+  <version>0.1.0</version>
+  <description>Assistive Follower Robot ROS 2 Package - Shoe detection and gap-following navigation</description>
+  <maintainer email="rpachgha@asu.edu">Rhutvik Pachghare</maintainer>
+  <license>MIT</license>
 
   <depend>rclpy</depend>
-  <depend>my_messages</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>ament_index_python</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
-  <depend>rosidl_default_generators</depend>
-  <depend>rosidl_default_runtime</depend>
-  <depend>depthai</depend>
-  <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>builtin_interfaces</exec_depend>
   <exec_depend>rclpy_qos</exec_depend>
   <exec_depend>python3-numpy</exec_depend>

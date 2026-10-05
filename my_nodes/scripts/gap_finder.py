@@ -12,7 +12,7 @@ WINDOW_SIZE = 10
 RANGE_THRESHOLD = 1.0
 BUBBLE_RADIUS = 10
 ANGLE_LIMIT = 80
-VELOCITY_LIMITS = [(10, 0.5), (20, 0.2)]
+VELOCITY_LIMITS = [(10, 0.5), (20, 0.3), (45, 0.15), (90, 0.05)]
 
 
 class ReactiveFollowGap(Node):
@@ -97,12 +97,21 @@ class ReactiveFollowGap(Node):
         proc_ranges[bubble_min:bubble_max] = 0
 
         start, end = self.find_max_gap(proc_ranges)
+        if start == 0 and end == 0:
+            # No valid gap found - stop and rotate to find space
+            cmd = Twist()
+            cmd.linear.x = 0.0
+            cmd.angular.z = 0.3  # Slow rotation to find gap
+            self.get_logger().warn("No valid gap found - rotating to search")
+            self.drive_pub.publish(cmd)
+            return
+
         best_idx = self.find_best_point(start, end, angles)
         steer_angle = angles[best_idx]
 
-        velocity = 0.5
+        velocity = 0.05  # Default minimum velocity for sharp turns
         for angle_deg, vel in VELOCITY_LIMITS:
-            if abs(steer_angle) <= math.radians(angle_deg):
+            if abs(math.degrees(steer_angle)) <= angle_deg:
                 velocity = vel
                 break
 
