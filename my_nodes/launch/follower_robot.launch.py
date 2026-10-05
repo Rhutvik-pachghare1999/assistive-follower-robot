@@ -8,14 +8,14 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
     # Launch arguments
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    
+
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
             default_value='false',
             description='Use simulation time if true'
         ),
-        
+
         # Shoe detection node
         Node(
             package='my_nodes',
@@ -27,7 +27,7 @@ def generate_launch_description():
                 ('/color/preview/image', '/oakd/rgb/preview/image'),
             ]
         ),
-        
+
         # Gap follower node
         Node(
             package='my_nodes',
@@ -40,7 +40,7 @@ def generate_launch_description():
                 ('/rpi_11/cmd_vel', '/cmd_vel'),
             ]
         ),
-        
+
         # Optional: GUI for debugging
         # Node(
         #     package='my_nodes',

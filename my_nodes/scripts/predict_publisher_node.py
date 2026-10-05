@@ -33,7 +33,7 @@ class CameraPredictorNode(Node):
 
         share_dir = get_package_share_directory("my_nodes")
         model_path = os.path.join(share_dir, "models", "shoe_model.pth")
-        
+
         if not os.path.exists(model_path):
             self.get_logger().error(f"Model file not found at {model_path}")
             raise FileNotFoundError(f"Model file not found: {model_path}")

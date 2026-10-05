@@ -53,7 +53,7 @@ def main():
     data_dir = Path("data")
     annotations_path = data_dir / "annotations.csv"
     images_dir = data_dir / "images"
-    
+
     if not annotations_path.exists():
         raise FileNotFoundError(
             f"Annotations file not found: {annotations_path}\n"
@@ -110,7 +110,7 @@ def main():
             best_val = val_loss
             torch.save(model.state_dict(), "shoe_model.pth")
             print(f"  Saved best model (val_loss={val_loss:.6f})")
-            print(f"  Copy to ROS package with: cp shoe_model.pth ../my_nodes/models/")
+            print("  Copy to ROS package with: cp shoe_model.pth ../my_nodes/models/")
 
     print(f"\nTraining complete. Best val loss: {best_val:.6f}")
     print("Deploy model: cp shoe_model.pth ../my_nodes/models/shoe_model.pth")
