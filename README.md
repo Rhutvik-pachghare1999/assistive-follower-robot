@@ -1,4 +1,4 @@
-# Multipurpose Macro Load Bearing Assistive Follower Robot
+# Assistive Follower Robot (TurtleBot 4)
 
 **RAS 598 — Experimentation and Deployment of Robotic Systems**  
 **Arizona State University | Spring 2025 | Team 07**
@@ -8,7 +8,14 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?logo=pytorch)](https://pytorch.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **An assistive follower robot that tracks a user via shoe detection (OAK-D + ResNet18) and navigates using reactive gap-finding with LiDAR, deployed on TurtleBot 4.**
+For our ASU robotics project, we built a TurtleBot 4 that follows a
+person while steering around obstacles. We used an OAK-D camera and
+ResNet18 to track shoes, then LiDAR and a Follow Gap controller to
+choose where the robot could move. My work focused on the vision
+model, ROS 2 integration, and getting the system deployed.
+
+The team, sensor recordings, implementation, and measured results are
+documented below.
 
 ---
 
