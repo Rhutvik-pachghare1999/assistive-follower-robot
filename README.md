@@ -155,6 +155,8 @@ For debugging and visualization:
 
 ## Quick Start
 
+**Evidence boundary:** the plots in [docs/results](docs/results) are project artifacts. The original TurtleBot/OAK-D hardware is required to reproduce physical following success rates; local unit imports or ROS package builds do not establish those results. This is a team project, and contributions are attributed in the team section.
+
 ### Hardware Requirements
 - TurtleBot 4 (or Create 3 + RPLiDAR)
 - OAK-D Camera (DepthAI)
@@ -171,26 +173,28 @@ cd assistive-follower-robot
 pip install -r requirements.txt
 # Or conda env create -f environment.yml
 
-# 3. Build ROS 2 workspace
+# 3. Build from the package in this checkout (do not copy from ~/ros2_ws)
+source /opt/ros/humble/setup.bash
+mkdir -p ~/ros2_ws/src
+ln -s "$(pwd)/my_nodes" ~/ros2_ws/src/my_nodes  # first-time setup
 cd ~/ros2_ws
-cp -r assistive-follower-robot/my_nodes src/
-colcon build --symlink-install
+colcon build --packages-select my_nodes --symlink-install
 source install/setup.bash
 
-# 4. Download model (Git LFS)
-git lfs pull
+# 4. Confirm that the tracked shoe detector is present
+test -f ~/ros2_ws/src/my_nodes/models/shoe_model.pth
 ```
 
 ### Running
 ```bash
 # Terminal 1: Shoe detection + pose estimation
-ros2 run my_nodes predict_publisher_node.py
+ros2 run my_nodes predict_publisher_node
 
 # Terminal 2: Gap-following navigation
-ros2 run my_nodes gap_finder.py
+ros2 run my_nodes gap_finder
 
 # Terminal 3 (optional): GUI
-python3 gui/ros2_gui.py
+python3 ~/assistive-follower-robot/gui/ros2_gui.py  # or use the checkout path
 ```
 
 ### Topics
